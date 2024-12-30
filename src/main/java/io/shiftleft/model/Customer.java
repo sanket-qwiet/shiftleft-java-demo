@@ -16,13 +16,14 @@ public class Customer {
   public Customer() {
   }
 
-  public Customer(String customerId, int clientId, String firstName, String lastName, Date dateOfBirth, String ssn,
-      String socialInsurancenum, String tin, String phoneNumber, Address address, Set<Account> accounts) {
+public Customer(String customerId, int clientId, String firstName, String lastName, Date dateOfBirth, String ssn,
+                String socialInsurancenum, String tin, String phoneNumber, Address address, Set<Account> accounts) {
     super();
     this.clientId = clientId;
     this.customerId = customerId;
-    this.firstName = firstName;
-    this.lastName = lastName;
+    // Use OWASP Java Encoder for Servlets to escape user input
+    this.firstName = Encode.forHtml(firstName);
+    this.lastName = Encode.forHtml(lastName);
     this.dateOfBirth = dateOfBirth;
     this.ssn = ssn;
     this.socialInsurancenum = socialInsurancenum;
@@ -30,7 +31,8 @@ public class Customer {
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.accounts = accounts;
-  }
+}
+
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -156,12 +158,13 @@ public class Customer {
     this.accounts = accounts;
   }
 
-  @Override
-  public String toString() {
-    return "Customer [id=" + id + ", customerId=" + customerId + ", clientId=" + clientId + ", firstName=" + firstName
-        + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", ssn=" + ssn + ", socialInsurancenum="
-        + socialInsurancenum + ", tin=" + tin + ", phoneNumber=" + phoneNumber + ", address=" + address + ", accounts="
-        + accounts + "]";
-  }
+@Override
+public String toString() {
+    // Use OWASP Java Encoder for Servlets to escape user input
+    return "Customer [id=" + id + ", customerId=" + customerId + ", clientId=" + clientId + ", firstName=" + Encode.forHtml(firstName) + ", lastName=" + Encode.forHtml(lastName) + ", dateOfBirth=" + dateOfBirth + ", ssn=" + ssn + ", socialInsurancenum="
+            + socialInsurancenum + ", tin=" + tin + ", phoneNumber=" + phoneNumber + ", address=" + address + ", accounts="
+            + accounts + "]";
+}
+
 
 }
